@@ -1,48 +1,61 @@
 .App {
   text-align: center;
-  background: radial-gradient(#437efd, rgb(29, 3, 65));
+  background: radial-gradient(#4b9fff, rgb(20, 2, 61));
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(60px + 2vmin);
+  font-size: 5vw;
   color: white;
 }
 
 .number-input {
   border-radius: 40px;
-  width: 370px;
+  width: 270px;
   height: 40px;
   padding: 10px;
-  font-size: 20px;
-  box-shadow: 5px 5px 1px 0px rgba(0, 0, 0, 0.9);
+  font-size: 33px;
   border: none;
   text-align: center;
   position: fixed;
   margin-top: 150px;
   transition: 0.3s;
-  background-color: #d7deee;
   outline: none;
+  box-shadow: 2px 2px 1px 0px rgba(0, 0, 0, 0.9);
+  animation: materialize;
+  animation-duration: 1s;
+  opacity: 0.9;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 .number-input:hover {
-  width: 400px;
+  box-shadow: 5px 5px 1px 0px rgba(0, 0, 0, 0.9);
   transition: 0.3s;
+  background-color: #ffff;
+  opacity: 1;
 }
 
 .number-input:focus {
-  width: 400px;
+  width: 285px;
   background-color: #ffff;
   transition: 0.3s;
+  box-shadow: 5px 5px 1px 0px rgba(0, 0, 0, 0.9);
+  opacity: 1;
 }
 
 .header {
   padding: 30px;
   margin-top: -280px;
   position: fixed;
-  animation-duration: 1s;
-  animation-name: slidein-header;
+  animation: appear;
+  animation-duration: 2s;
+  text-shadow: 5px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
 }
 
 .rotate270 {
@@ -55,9 +68,10 @@
 }
 
 .arrow {
-  animation-duration: 1s;
-  animation-name: slidein;
-  animation-iteration-count: infinite;
+  animation-duration: 1s, 1s;
+  animation-name: slidein, slidein-onload;
+  animation-iteration-count: infinite, 1;
+  animation-delay: 0.6s, 0s;
   animation-direction: alternate;
   -webkit-filter: drop-shadow(5px 5px 5px #222);
   filter: drop-shadow(3px 3px 0px rgb(0, 0, 0));
@@ -65,7 +79,7 @@
 
 @keyframes slidein {
   from {
-    margin-top: 1vh;
+    margin-top: 4vh;
     width: 100%;
   }
 
@@ -75,23 +89,43 @@
   }
 }
 
-@keyframes slidein-header {
+@keyframes slidein-onload {
   from {
-    margin-left: 100%;
-    width: 100%;
+    margin-top: -100vh;
+    opacity: 0;
   }
 
   to {
-    margin-left: 0%;
-    width: 100%;
+    margin-top: 0vh;
+    opacity: 1;
+  }
+}
+
+@keyframes appear {
+  from {
+    color: rgba(211, 34, 34, 0);
+    opacity: 0;
+    margin-top: -25vh;
+  }
+  to {
+  }
+}
+
+@keyframes materialize {
+  from {
+    width: 0px;
+  }
+  to {
   }
 }
 
 .result {
   position: fixed;
   margin-top: 400px;
-  font-size: 30px;
-  color: #91dcf3;
+  font-size: 4vh;
+  color: #f6f85c;
+  text-shadow: 5px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+  max-width: 80%;
 }
 
 .all-elements {
@@ -101,4 +135,5 @@
   justify-content: center;
   text-align: center;
   margin-top: -10vh;
+  position: fixed;
 }
