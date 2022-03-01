@@ -1,67 +1,15 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
 import arrow from "../src/images/arrow.png";
 
-function App(): JSX.Element {
+export function App(): JSX.Element {
   const [input, setInput] = useState("");
-
-  let numbers = {
-    0: "zero",
-    1: "one",
-    2: "two",
-    3: "three",
-    4: "four",
-    5: "five",
-    6: "six",
-    7: "seven",
-    8: "eight",
-    9: "nine",
-    10: "ten",
-    11: "eleven",
-    12: "twelve",
-    13: "thirteen",
-    14: "fourteen",
-    15: "fifteen",
-    16: "sixteen",
-    17: "seventeen",
-    18: "eighteen",
-    19: "nineteen",
-    20: "twenty",
-    30: "thirty",
-    40: "forty",
-    50: "fifty",
-    60: "sixty",
-    70: "seventy",
-    80: "eighty",
-    90: "ninety",
-  };
-
-  const makeWord = (input: string) => {
-    let mod: number = Number(input) % 10;
-    let firstPart: number = Number(input) - mod;
-    let noInput: string = "";
-
-    if (input === noInput) {
-      return "";
-    } else if (Number(input) < 10) {
-      return numbers[mod as unknown as keyof typeof numbers];
-    } else if (firstPart == 1) {
-      return numbers[input as unknown as keyof typeof numbers];
-    } else {
-      return (
-        numbers[firstPart as unknown as keyof typeof numbers] +
-        " " +
-        numbers[mod as unknown as keyof typeof numbers]
-      );
-    }
-  };
 
   return (
     <div className="App">
       <div className="all-elements">
         <div className="header">Convert your number</div>
+
         <div className="arrow">
           <img src={arrow} width="75px" height="60px" className="rotate270" />
         </div>
@@ -72,10 +20,69 @@ function App(): JSX.Element {
           type="number"
           placeholder=""
         />
-        <div className="result">{makeWord(input)}</div>
+        <div className="result">{numToWords(Number(input))}</div>
       </div>
     </div>
   );
 }
 
 export default App;
+
+export function numToWords(num: any = 0) {
+  if (num == 0) return "Zero";
+  num = ("0".repeat((2 * (num += "").length) % 3) + num).match(/.{3}/g);
+  let out = "",
+    T10s = [
+      "",
+      "one",
+      "two",
+      "three",
+      "four",
+      "five",
+      "six",
+      "seven",
+      "eight",
+      "nine",
+      "ten",
+      "eleven",
+      "twelve",
+      "thirteen",
+      "fourteen",
+      "fifteen",
+      "sixteen",
+      "seventeen",
+      "eighteen",
+      "nineteen",
+    ],
+    T20s = [
+      "",
+      "",
+      "twenty",
+      "thirty",
+      "forty",
+      "fifty",
+      "sixty",
+      "seventy",
+      "eighty",
+      "ninety",
+    ],
+    sclT = ["", "thousand", "million", "billion", "trillion", "quadrillion"];
+  return (
+    num.forEach((n: string, i: number) => {
+      if (+n) {
+        let hundred = +n[0],
+          ten = +n.substring(1),
+          scl = sclT[num.length - i - 1];
+        out +=
+          (out ? " " : "") +
+          (hundred ? T10s[hundred] + " hundred" : "") +
+          (hundred && ten ? " " : "") +
+          (ten < 20
+            ? T10s[ten]
+            : "and " + T20s[+n[1]] + (+n[2] ? "-" : "") + T10s[+n[2]]);
+        out += (out && scl ? " " : "") + scl;
+      }
+    }),
+    out
+  );
+}
